@@ -20,7 +20,7 @@ class LinebotController < ApplicationController
        end
        
        p "******* get response debug start ********"
-       res = client.get_profile("<userId>")
+       res = client.get_profile("U50a2356d553c644fecb289f5d029836d")
        p res
        p "******* get response debug end ********"
    
