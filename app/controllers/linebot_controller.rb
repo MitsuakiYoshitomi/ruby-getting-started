@@ -20,6 +20,9 @@ class LinebotController < ApplicationController
        end
    
        events = client.parse_events_from(body)
+       
+       p "[debug]"
+       p events
    
        events.each { |event|
          case event
