@@ -18,6 +18,19 @@ class LinebotController < ApplicationController
        unless client.validate_signature(body, signature)
          error 400 do "Bad Request" end
        end
+       
+       p "******* get response debug start ********"
+       response = client.get_profile("<userId>")
+       case response
+       when Net::HTTPSuccess then
+           contact = JSON.parse(response.body)
+           p contact['displayName']
+           p contact['pictureUrl']
+           p contact['statusMessage']
+      else
+           p "#{response.code} #{response.body}"
+      end
+       p "******* get response debug end ********"
    
        events = client.parse_events_from(body)
        
