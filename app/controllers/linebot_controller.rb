@@ -20,8 +20,16 @@ class LinebotController < ApplicationController
        end
        
        p "******* get response debug start ********"
-       res = client.get_profile("U50a2356d553c644fecb289f5d029836d")
-       p res
+        response = client.get_profile("U50a2356d553c644fecb289f5d029836d")
+        case response
+        when Net::HTTPSuccess then
+          contact = JSON.parse(response.body)
+          p contact['displayName']
+          p contact['pictureUrl']
+          p contact['statusMessage']
+        else
+          p "#{response.code} #{response.body}"
+        end
        p "******* get response debug end ********"
    
        events = client.parse_events_from(body)
