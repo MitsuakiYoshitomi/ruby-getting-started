@@ -44,7 +44,7 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
 
         p "********** source debug start ***************"
-        p event.source
+        p event
         p "********** source debug end ***************"
 
         case event.type
