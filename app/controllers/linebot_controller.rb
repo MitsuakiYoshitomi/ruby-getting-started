@@ -36,11 +36,9 @@ class LinebotController < ApplicationController
         case response
         when Net::HTTPSuccess then
           contact = JSON.parse(response.body)
-          p contact['displayName']
-          p contact['pictureUrl']
-          p contact['statusMessage']
+          userName = contact['displayName'] + "さん"
         else
-          p "#{response.code} #{response.body}"
+          userName = "誰か知らないけど"
         end
         p "********** source debug end ***************"
 
@@ -48,7 +46,7 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           message = {
               type: "text",
-              text: event.message["text"] + "!"
+              text: userName + "\n" + event.message["text"] + "!"
           }
           client.reply_message(event["replyToken"], message)
         when Line::Bot::Event::MessageType::Location
