@@ -23,14 +23,11 @@ class LinebotController < ApplicationController
 
     events = client.parse_events_from(body)
 
-    p "[debug]"
-    p events
-
     events.each { |event|
       case event
       when Line::Bot::Event::Message
 
-        p "********** source debug start ***************"
+        #　送信した人の名前を取得
         userId = event["source"]["userId"]
         response = client.get_profile(userId)
         case response
@@ -38,9 +35,8 @@ class LinebotController < ApplicationController
           contact = JSON.parse(response.body)
           userName = contact['displayName'] + "さん"
         else
-          userName = "誰か知らないけど"
+          userName = "誰か知らんけど"
         end
-        p "********** source debug end ***************"
 
         case event.type
         when Line::Bot::Event::MessageType::Text
