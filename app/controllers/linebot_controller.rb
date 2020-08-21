@@ -21,19 +21,6 @@ class LinebotController < ApplicationController
       end
     end
 
-    p "******* get response debug start ********"
-    # response = client.get_profile("<userId>")
-    # case response
-    # when Net::HTTPSuccess then
-    #   contact = JSON.parse(response.body)
-    #   p contact['displayName']
-    #   p contact['pictureUrl']
-    #   p contact['statusMessage']
-    # else
-    #   p "#{response.code} #{response.body}"
-    # end
-    p "******* get response debug end ********"
-
     events = client.parse_events_from(body)
 
     p "[debug]"
@@ -44,7 +31,17 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
 
         p "********** source debug start ***************"
-        p event["source"]["userId"]
+        userId = event["source"]["userId"]
+        response = client.get_profile(userId)
+        case response
+        when Net::HTTPSuccess then
+          contact = JSON.parse(response.body)
+          p contact['displayName']
+          p contact['pictureUrl']
+          p contact['statusMessage']
+        else
+          p "#{response.code} #{response.body}"
+        end
         p "********** source debug end ***************"
 
         case event.type
