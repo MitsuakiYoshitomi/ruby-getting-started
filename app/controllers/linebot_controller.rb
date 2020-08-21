@@ -36,6 +36,10 @@ class LinebotController < ApplicationController
 
     events = client.parse_events_from(body)
 
+    p "********** source debug start ***************"
+    p events.source
+    p "********** source debug end ***************"
+
     p "[debug]"
     p events
 
