@@ -40,13 +40,13 @@ class LinebotController < ApplicationController
     p events
 
     events.each { |event|
-
-      p "********** source debug start ***************"
-      p event.source.userId
-      p "********** source debug end ***************"
-
       case event
       when Line::Bot::Event::Message
+
+        p "********** source debug start ***************"
+        p event.source
+        p "********** source debug end ***************"
+
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = {
